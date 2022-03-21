@@ -1,0 +1,186 @@
+print('----------------------Delhi Crime Database-----------------------')
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+ch='y'
+while ch=='y':
+    print('1. Open File')
+    print('2. CSV File Statistics Menu')
+    print('3. Show Records ')
+    print('4. Search a Record')
+    print('5. Add a New Record')
+    print('6. Delete a Record')
+    print('7. Modify Record')
+    print('8. Sorting')
+    print('9. Show Age V/S Number Of Criminals Graph')
+    print('10. Show Number Of Crimes Per Year Graph')
+    print('11. Save File')
+    choice=int(input('Enter your choice : '))
+    if choice==1:
+       df=pd.read_csv('E:\\CSV file.csv')
+       pd.set_option('display.max_rows',None,'display.max_columns',None)
+       print('File Opened')
+       
+    elif choice==2:
+           print('Dimension:',df.ndim)
+           print('Shape:',df.shape)
+           print('Size:',df.size)
+           print('Datatype of Columns')
+           print(df.dtypes)
+           print('Columns')
+           print(df.columns)
+           print('Index')
+           print(df.index)
+          
+    elif choice==3:
+        print(df)
+     
+    elif choice==4:
+       print('1. To Search By Criminal Number')
+       print('2. To Search By Criminal Name')
+       print('3. To Search By Age')
+       sr=int(input('Enter your choice To Search a record : '))
+       if sr==1:
+           cno=int(input("Enter Criminal Number : "))
+           ind=df[df['CNo.']==cno].index.values
+           if len(ind)==0:
+               print("Not Found")
+           else:
+               print(df[df['CNo.']==cno])
+       elif sr==2:
+           cn=input("Enter Criminal Name : ")
+           ind=df[df['CName']==cn].index.values
+           if len(ind)==0:
+               print("Not Found")
+           else:           
+               print(df[(df["CName"]==cn)])
+
+       elif sr==3:
+           ca=int(input("Enter Criminal Age : "))           
+           ind=df[df['Age']==ca].index.values
+           if len(ind)==0:
+               print("Not Found")
+           else:
+               print(df[(df["Age"]==ca)])
+       else:
+           print("Please enter a valid choice(1 to 3)")       
+       
+    elif choice==5:
+       cno=int(input("Enter Criminal Number : "))
+       cn=input("Enter Criminal Name : ")
+       cg=input("Enter Criminal Gender : ")
+       ca=input("Enter Criminal Age  : ")
+       cc=input("Enter Crime Commited : ")
+       cd=input("Enter Date Of Crime(YYYY-MM-DD) : ")
+       cpl=input("Enter Place Of Crime : ")
+       cp=input("Enter Punishment : ")
+       df=df.append({'CNo.':cno,'CName':cn,'Gender':cg,'Age':ca,
+                     'Crime Commited':cc,'Date Of Crime':cd,
+                     'Place Of Crime':cpl,'Punishment':cp},
+                      ignore_index=True)
+       print('Record Added')
+       
+    elif choice==6:
+       cno=int(input("Enter Criminal No. To Delete : "))
+       ind=df[df['CNo.']==cno].index.values
+       if len(ind)==0:
+           print("Not Found")
+       else:
+           cno=cno-1
+           df=df.drop(cno)
+           print('Record Deleted')
+           
+    elif choice==7:
+       cno=int(input("Enter Criminal Number To Modify : "))
+       ind=df[df['CNo.']==cno].index.values
+       if len(ind)==0:
+           print("Not Found")
+       else:
+          cn=input("Enter Criminal Name : ")
+          cg=input("Enter Criminal Gender : ")
+          ca=int(input("Enter Criminal Age  : "))
+          cc=input("Enter Crime Commited : ")
+          cd=input("Enter Date Of Crime(YYYY-MM-DD) : ")
+          cpl=input("Enter Place Of Crime : ")
+          cp=input("Enter Punishment : ")
+          df.loc[ind,'CName']=cn
+          df.loc[ind,'Gender']=cg
+          df.loc[ind,'Age']=ca
+          df.loc[ind,'Crime Commited']=cc
+          df.loc[ind,'Date Of Crime']=cd
+          df.loc[ind,'Place Of Crime']=cpl
+          df.loc[ind,'Punishment']=cp
+          print('Record Modified')
+          
+    elif choice==8:
+       print('1. To Sort By Criminal Number')
+       print('2. To Sort By Criminal Name')
+       print('3. To Sort By Age')
+       print('4. To Sort By Date Of Crime')
+       st=int(input('Enter your choice To Sort : '))
+       if st==1:
+           df=df.sort_values(by=['CNo.'],ascending=True)
+           print(df)
+       elif st==2:
+           df=df.sort_values(by=['CName'],ascending=True)
+           print(df)
+       elif st==3:
+           df=df.sort_values(by=['Age'],ascending=True)
+           print(df)
+       elif st==4:
+           df=df.sort_values(by=['Date Of Crime'],ascending=True)
+           print(df)
+       else:
+          print("Please enter a valid choice(1 to 4)")
+          
+    elif choice==9:
+        age=df["Age"]
+        y=[1,2,3,4]
+        plt.hist(age,bins=[16,18,20,22,24,26,28,30,32,34,36,38])
+        plt.xlabel("Age")
+        plt.ylabel("No. of Crime")
+        plt.xticks([16,18,20,22,24,26,28,30,32,34,36,38])
+        plt.title("Age V/S Number Of Criminals")
+        plt.show()
+
+    elif choice==10:
+        date=df.sort_values(by=['Date Of Crime'],ascending=True)
+        date=date['Date Of Crime']
+        l1=[]
+        for x in date:
+            y=x[:4]
+            l1.append(y)
+        plt.hist(l1,width=0.3)
+        plt.xlabel('Year')
+        plt.ylabel('Number of Crime')
+        plt.title('Number Of Crimes Per Year')
+        plt.show()        
+        
+    elif choice==11:       
+        df.to_csv('E:\\CSV file.csv',index=False)
+        print('File saved')
+        
+    else:    
+         print("Please Enter a Valid Choice(1 to 11)")
+         
+    ch=input('Do You Want To Continue(y/n) : ')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
