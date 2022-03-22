@@ -1,11 +1,10 @@
-# Project-On-Delhi-Crime-Database
-print('----------------------Delhi Crime Database-----------------------')
+# print('----------------------Delhi Crime Database-----------------------')
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 ch='y'
 while ch=='y':
-    print('1. Open File')
+    print('1. Import CSV File')
     print('2. CSV File Statistics Menu')
     print('3. Show Records ')
     print('4. Search a Record')
@@ -21,7 +20,7 @@ while ch=='y':
     if choice==1:
        df=pd.read_csv('E:\\CSV file.csv')
        pd.set_option('display.max_rows',None,'display.max_columns',None)
-       print('File Opened')
+       print('CSV File Imported')
        
     elif choice==2:
            print('Dimension:',df.ndim)
@@ -71,7 +70,7 @@ while ch=='y':
        cno=int(input("Enter Criminal Number : "))
        cn=input("Enter Criminal Name : ")
        cg=input("Enter Criminal Gender : ")
-       ca=input("Enter Criminal Age  : ")
+       ca=int(input("Enter Criminal Age  : "))
        cc=input("Enter Crime Commited : ")
        cd=input("Enter Date Of Crime(YYYY-MM-DD) : ")
        cpl=input("Enter Place Of Crime : ")
@@ -167,11 +166,9 @@ while ch=='y':
              
     elif choice==9:
         age=df["Age"]
-        y=[1,2,3,4]
-        plt.hist(age,bins=[16,18,20,22,24,26,28,30,32,34,36,38])
+        plt.hist(age)
         plt.xlabel("Age")
         plt.ylabel("No. of Crime")
-        plt.xticks([16,18,20,22,24,26,28,30,32,34,36,38])
         plt.title("Age V/S Number Of Criminals")
         plt.show()
 
@@ -196,7 +193,7 @@ while ch=='y':
          print("Please Enter a Valid Choice(1 to 11)")
          
     ch=input('Do You Want To Continue(y/n) : ')
-    
-    
+
+
     
     
